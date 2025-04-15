@@ -1,0 +1,16 @@
+
+-- 4_function.sql
+DELIMITER / /
+
+CREATE FUNCTION get_no_of_tran(acct CHAR(9)) RETURNS INT
+BEGIN
+  DECLARE tran_count INT;
+  SELECT COUNT(*) INTO tran_count
+  FROM Acc_transaction
+  WHERE accNum = acct;
+  RETURN tran_count;
+END; //
+
+DELIMITER;
+-- Example call:
+SELECT get_no_of_tran ('ACC000001')

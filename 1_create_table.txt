@@ -1,0 +1,95 @@
+-- 1_create_table.sql
+-- Creating tables
+CREATE TABLE Person (
+    taxPayerId CHAR(9) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    paddress VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Customer (
+    taxPayerId CHAR(9) PRIMARY KEY,
+    sinceYear INT NOT NULL,
+    FOREIGN KEY (taxPayerId) REFERENCES Person (taxPayerId)
+);
+
+CREATE TABLE Employee (
+    taxPayerId CHAR(9) PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    salary DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (taxPayerId) REFERENCES Person (taxPayerId)
+);
+
+CREATE TABLE Account (
+    accNum CHAR(9) PRIMARY KEY,
+    type VARCHAR(20) NOT NULL,
+    balance DECIMAL(15, 2) NOT NULL
+);
+
+CREATE TABLE Owns (
+    taxPayerId CHAR(9),
+    accNum CHAR(9),
+    PRIMARY KEY (taxPayerId, accNum),
+    FOREIGN KEY (accNum) REFERENCES Account (accNum),
+    FOREIGN KEY (taxPayerId) REFERENCES Customer (taxPayerId)
+);
+
+CREATE TABLE Checking (
+    accNum CHAR(9) PRIMARY KEY,
+    noFreeChecks INT NOT NULL,
+    FOREIGN KEY (accNum) REFERENCES Account (accNum)
+);
+
+CREATE TABLE Saving (
+    accNum CHAR(9) PRIMARY KEY,
+    intRate DECIMAL(5, 2) NOT NULL,
+    FOREIGN KEY (accNum) REFERENCES Account (accNum)
+);
+
+CREATE TABLE Loan (
+    loanNo CHAR(9) PRIMARY KEY,
+    amount DECIMAL(15, 2) NOT NULL
+);
+
+CREATE TABLE Borrow (
+    taxPayerId CHAR(9),
+    loanNo CHAR(9),
+    PRIMARY KEY (taxPayerId, loanNo),
+    FOREIGN KEY (loanNo) REFERENCES Loan (loanNo),
+    FOREIGN KEY (taxPayerId) REFERENCES Customer (taxPayerId)
+);
+
+CREATE TABLE Acc_transaction (
+    accNum CHAR(9),
+    tDate DATE NOT NULL,
+    tTime TIME NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    type VARCHAR(20) NOT NULL,
+    PRIMARY KEY (accNum, tDate, tTime),
+    FOREIGN KEY (accNum) REFERENCES Account (accNum)
+);
+
+-- Views from Figure 3
+CREATE VIEW employeeView AS
+SELECT p.taxPayerId, p.name, p.paddress, e.title, e.salary
+FROM Employee e, Person p
+WHERE
+    e.taxPayerId = p.taxPayerId;
+
+CREATE VIEW customerView AS
+SELECT p.taxPayerId, p.name, p.paddress, c.sinceYear
+FROM Person p, Customer c
+WHERE
+    c.taxPayerId = p.taxPayerId;
+
+CREATE VIEW checkingView AS
+SELECT a.accNum, a.type, a.balance, c.noFreeChecks
+FROM Account a, Checking c
+WHERE
+    a.accNum = c.accNum;
+
+CREATE VIEW savingView AS
+SELECT a.accNum, a.type, a.balance, s.intRate
+FROM Account a, Saving s
+WHERE
+    a.accNum = s.accNum;
+

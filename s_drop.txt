@@ -1,0 +1,39 @@
+
+-- s_drop.sql-- Drop views first
+DROP VIEW IF EXISTS empLoan;
+
+DROP VIEW IF EXISTS ownCheckingAcc;
+
+DROP VIEW IF EXISTS savingView;
+
+DROP VIEW IF EXISTS checkingView;
+
+DROP VIEW IF EXISTS customerView;
+
+DROP VIEW IF EXISTS employeeView;
+
+-- Drop procedure and function
+DROP PROCEDURE IF EXISTS acc_info;
+
+DROP FUNCTION IF EXISTS get_no_of_tran;
+
+-- Drop tables (in reverse order of dependencies)
+DROP TABLE IF EXISTS Acc_transaction;
+
+DROP TABLE IF EXISTS Borrow;
+
+DROP TABLE IF EXISTS Loan;
+
+DROP TABLE IF EXISTS Saving;
+
+DROP TABLE IF EXISTS Checking;
+
+DROP TABLE IF EXISTS Owns;
+
+DROP TABLE IF EXISTS Account;
+
+DROP TABLE IF EXISTS Employee;
+
+DROP TABLE IF EXISTS Customer;
+
+DROP TABLE IF EXISTS Person;

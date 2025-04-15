@@ -1,0 +1,89 @@
+
+-- 2_insert.sql
+
+--person
+INSERT INTO Person
+VALUES (
+        '123456789',
+        'Alice Smith',
+        '123 Maple St'
+    ),
+    (
+        '987654321',
+        'Bob Johnson',
+        '456 Oak Ave'
+    ),
+    (
+        '111223333',
+        'Charlie Lee',
+        '789 Pine Rd'
+    );
+
+--customer
+INSERT INTO Customer VALUES ('123456789', 2020), ('987654321', 2018);
+
+INSERT INTO
+    Customer (taxPayerId, sinceYear)
+VALUES ('111223333', 2020);
+
+-- Employee
+INSERT INTO Employee VALUES ( '111223333', 'Manager', 90000.00 );
+
+--account
+INSERT INTO
+    Account
+VALUES ('ACC000001', 'c', 1500.00),
+    ('ACC000002', 's', 2000.00),
+    ('ACC000003', 'c', 1000.00);
+
+--owns
+INSERT INTO
+    Owns
+VALUES ('123456789', 'ACC000001'),
+    ('123456789', 'ACC000002'),
+    ('987654321', 'ACC000003');
+
+--Checking
+INSERT INTO Checking VALUES ('ACC000001', 3), ('ACC000003', 5);
+
+--savings
+INSERT INTO Saving VALUES ('ACC000002', 1.5);
+
+--loan
+INSERT INTO
+    Loan
+VALUES (101, 5000.00),
+    (102, 3000.00),
+    (103, 4000.00);
+
+--borrow
+INSERT INTO
+    Borrow
+VALUES ('111223333', 101),
+    ('111223333', 102),
+    ('111223333', 103);
+
+--acount transactions
+INSERT INTO
+    Acc_transaction
+VALUES (
+        'ACC000001',
+        '2025-03-01',
+        '09:00:00',
+        100.00,
+        'Deposit'
+    ),
+    (
+        'ACC000001',
+        '2025-03-02',
+        '10:00:00',
+        50.00,
+        'Withdraw'
+    ),
+    (
+        'ACC000002',
+        '2025-03-01',
+        '11:00:00',
+        200.00,
+        'Deposit'
+    );

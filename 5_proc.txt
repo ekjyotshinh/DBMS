@@ -1,0 +1,18 @@
+
+-- 5_proc.sql
+DELIMITER / /
+
+CREATE PROCEDURE acc_info (IN custId CHAR(9))
+BEGIN
+  SELECT p.name, s.accNum, a.balance
+  FROM Person p
+  JOIN Customer c ON p.taxPayerId = c.taxPayerId
+  JOIN Owns o ON c.taxPayerId = o.taxPayerId
+  JOIN Saving s ON o.accNum = s.accNum
+  JOIN Account a ON s.accNum = a.accNum
+  WHERE c.taxPayerId = custId;
+END //
+
+DELIMITER;
+-- Example call:
+CALL acc_info ('123456789');

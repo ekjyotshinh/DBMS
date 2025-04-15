@@ -1,0 +1,34 @@
+
+-- 3_view.sql
+-- View 1: Employees with more than 2 loans
+CREATE VIEW empLoan AS
+SELECT e.taxPayerId, p.name, e.salary
+FROM Employee e
+    JOIN Person p ON e.taxPayerId = p.taxPayerId
+WHERE
+    e.taxPayerId IN (
+        SELECT taxPayerId
+        FROM Borrow
+        GROUP BY
+            taxPayerId
+        HAVING
+            COUNT(*) > 2
+    );
+
+
+
+-- View 2: Customers with at least one checking account
+CREATE VIEW ownCheckingAcc AS
+SELECT DISTINCT
+    p.taxPayerId,
+    p.name,
+    c.sinceYear
+FROM
+    Customer c
+    JOIN Person p ON c.taxPayerId = p.taxPayerId
+    JOIN Owns o ON c.taxPayerId = o.taxPayerId
+    JOIN Checking ch ON o.accNum = ch.accNum;
+
+-- Test the views
+SELECT * FROM empLoan;
+SELECT * FROM ownCheckingAcc;
